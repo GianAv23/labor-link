@@ -10,6 +10,6 @@ if (isset($_POST['id'])) {
     $stmt_delete->execute([$id]);
 
     // Redirect ke halaman utama setelah penghapusan selesai
-    header('Location: http://localhost/labor_link/index.php');
+    header('Location: http://localhost/labor-link/index.php');
     exit();
 }

@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 
         
         if ($stmt->rowCount() > 0) {
-            header("Location: http://localhost/labor_link/index.php");
+            header("Location: http://localhost/labor-link/index.php");
             exit();
         } else {
             echo "Gagal menyimpan data.";
@@ -114,7 +114,7 @@ if(!isset($_SESSION['id'])){
 </head>
 
 <body>
-    <div class="w-screen h-screen p-16 bg-bgColor">
+    <div class="w-screen min-h-screen p-16 bg-bgColor">
 
         <!-- ELLIIPSE START -->
         <!-- <img class="absolute z-0 top-0 left-0 w-screen h-full" src="assets/blurellipse.svg" alt=""> -->
@@ -127,8 +127,6 @@ if(!isset($_SESSION['id'])){
                 <span class="text-white font-bold">
                     Labor<span class="text-textColor2">Link</span>
                 </span>
-
-
             </div>
             <!-- LOGO END -->
 

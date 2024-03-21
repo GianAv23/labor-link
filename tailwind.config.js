@@ -1,14 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./*.{html, js, php}"],
+  content: ["./src/**/*.{php,html,js}"],
   theme: {
     extend: {
       colors: {
-        lightColor: "#C7FFFD",
-        socialMedia: "#1BACAA",
-        borderAboutme: "#6CECEA",
-        mainBgcolor: "#070E1D",
-        navbarBlur: "#133C56",
+        bgColor: "#0D1529",
+        bgCardColor: "#C1C1C1",
+        cardData: "#EEEEEE",
+        editBtn: "#161E31",
+        textColor: "#173856",
+        textColor2: "#7DD8F5",
       },
     },
   },

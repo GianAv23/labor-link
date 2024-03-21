@@ -1,8 +1,4 @@
 <?php
-// require_once 'open_connection.php';
-
-// $query = "SELECT * FROM mahasiswa";
-// $stmt = $connection->query($query);
 require 'dbphp.php';
 $kontak_terbaru = list_RECENTLY($_SESSION["id"]);
 $data_kontak = list_ALL_CONTACT($_SESSION["id"]);
@@ -17,11 +13,10 @@ if (isset($_POST["submit"])) {
 
  if(isset($_POST['logout'])) {
             require_once 'logout.php';
-            header("Location: signUP_PAGE.php");
+            header("Location: login.php");
 
             exit;
-            
-             }
+}
 
 if(!isset($_SESSION['id'])){
     header("Location: login.php");
@@ -37,13 +32,8 @@ if(!isset($_SESSION['id'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" type="" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
     tailwind.config = {
         theme: {
@@ -62,11 +52,6 @@ if(!isset($_SESSION['id'])){
     </script>
 
     <title>Labor Link🚀</title>
-    <style>
-    * {
-        font-family: Figtree;
-    }
-    </style>
 </head>
 
 <body>
@@ -119,7 +104,8 @@ if(!isset($_SESSION['id'])){
                             <img class="h-6 w-6" src="assets/add_contact.svg" alt=""></button>
 
                     </form> -->
-                    <a class="bg-cardData/15 rounded-full px-6 text-white font-bold text-3xl items-center border-dashed border-2 mr-2 flex"
+
+                    <a class="bg-cardData/15 rounded-full px-6 py-3 text-white font-bold text-3xl items-center border-dashed border-2 mr-2 flex"
                         href="insert_form.php">
                         <img class="h-6 w-6" src="assets/add_contact.svg" alt=""></a>
 
@@ -149,7 +135,7 @@ if(!isset($_SESSION['id'])){
             </div>
         </div>
 
-        <!-- DATA START -->1
+        <!-- DATA START -->
         <div
             class="bg-bgCardColor/5 w-screen h-screen border-2 border-editBtn border-t-cardData border-r-cardData border-l-cardData rounded-t-3xl flex flex-col items-center pt-5 z-10">
 

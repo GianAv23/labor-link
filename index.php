@@ -58,7 +58,11 @@ if(!isset($_SESSION['id'])){
     <div class="bg-bgColor h-screen w-screen pt-8 px-16 flex flex-col justify-start items-center overflow-hidden">
 
         <!-- ELLIIPSE START -->
-        <img class="absolute z-0 top-0 left-0 w-screen h-full" src="assets/blurellipse.svg" alt="">
+        <img class="absolute z-0 top-0 left-0 h-full blur-2xl" src="assets/blurellipse.svg" alt="">
+        <!-- ELLIIPSE END -->
+
+        <!-- ELLIIPSE START -->
+        <!-- <img class="absolute z-0 bottom-0 right-0 w-screen h-full" src="assets/blurellipse.svg" alt=""> -->
         <!-- ELLIIPSE END -->
 
         <div class="container-lg flex flex-col z-10">
@@ -75,7 +79,7 @@ if(!isset($_SESSION['id'])){
 
                 <div class="py-1 px-2 border-2 border-white rounded-full">
                     <div>
-                        <span class="text-white">Hi, <?= $name ?></span>
+                        <span class="text-white">Hi, <span class="font-semibold"><?= $name ?></span></span>
                     </div>
                 </div>
             </div>
@@ -83,14 +87,16 @@ if(!isset($_SESSION['id'])){
 
             <!-- HEADER START -->
             <div class="mb-12">
-
+                <!-- LOGOUT BUTTON START -->
                 <div>
                     <form method="post">
                         <button class="bg-red-400 text-white font-semibold px-2 items-center rounded-full" type="submit"
                             name="logout">Log Out</button>
                     </form>
-
                 </div>
+                <!-- LOGOUT BUTTON END -->
+
+
                 <div class="mb-4">
                     <span class=" text-white font-semibold">Recently Added</span>
                 </div>
@@ -144,9 +150,13 @@ if(!isset($_SESSION['id'])){
 
                 <input
                     class="text-cardData bg-bgColor/50 w-64 font-medium rounded-full px-3 py-1 border-2 border-textColor2/30"
-                    id="search" type="text" placeholder="Search...">
+                    id="live_search" autocomplete="off" type="text" placeholder="Search...">
             </div>
             <!-- SEARCH END -->
+
+            <div id="result_not_found" style="display: none;"><span class="text-cardData font-semibold">Result not
+                    found</span></div>
+
 
 
             <div class="flex flex-col gap-4 overflow-y-scroll h-64 w-80 rounded-3xl">
@@ -225,127 +235,35 @@ if(!isset($_SESSION['id'])){
 
         </div>
         <!-- DATA END -->
+
     </div>
 
-
-
-
-    <!-- HEADER END -->
-
-    <!-- <h1 class="font-bold text-2xl mb-5 text-center">TEKKOM MANAGER</h1> -->
-
-    <!-- <div class="bg-slate-200 p-5 rounded-2xl">
-                <table id="example" class="display" style="width:100%">
-                    <button
-                        class="flex flex-wrap border rounded-lg bg-slate-200 py-2 px-3 mb-4 shadow-lg place-items-center"
-                        onclick="window.location.href = 'insert_form.php';">
-                        <span>Add Mahasiswa</span>
-                    </button>
-
-                    <thead>
-                        <tr>
-                            <th class="rounded-l-lg">NIM</th>
-                            <th>Nama</th>
-                            <th>Prodi</th>
-                            <th class="rounded-r-lg">Tindakan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        require_once 'open_connection.php';
-
-                        $query = "SELECT * FROM mahasiswa";
-
-                        $stmt = $connection->query($query);
-
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        ?>
-                        <tr id="row-<?= $row['id'] ?>">
-                            <td class="rounded-l-lg"><?= $row['nim'] ?></td>
-                            <td class="flex flex-row gap-3">
-                                <img src="<?= $row['foto_path'] ?>" class="rounded-full w-7 h-7 bg-cover" alt="">
-
-                                <?= $row['nama'] ?>
-
-                            </td>
-                            <td><?= $row['prodi'] ?></td>
-                            <td class="rounded-r-lg flex flex-row gap-10">
-                                <form method="post" action="delete_proses.php">
-                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                    <button type="submit">Delete</button>
-                                </form>
-
-
-
-                                <a href="edit_proses.php?id=<?= $row['id'] ?>">Edit</a>
-
-
-
-                                <img id="bookmark-regular-<?= $row['id'] ?>" src="assets/bookmark-regular.svg"
-                                    class="w-5" onclick="toggleBookmark(<?= $row['id'] ?>)">
-
-
-                                <img id="bookmark-solid-<?= $row['id'] ?>" src="assets/bookmark-solid.svg" class="w-5"
-                                    style="display: none;" onclick="toggleBookmark(<?= $row['id'] ?>)">
-                            </td>
-                        </tr>
-                        <?php
-                        }
-                        $connection = null;
-                        ?>
-                    </tbody>
-                </table>
-            </div> -->
-
-
-    <script src="script.js"></script>
-    <script src="dataTables.js"></script>
-    <script src="dataTablesTailwind.js"></script>
     <script src="search_JS.js"></script>
-    <!-- <script>
-        // Fungsi untuk menyimpan status bookmark ke dalam localStorage
-        function setBookmarkStatus(rowId, status) {
-            localStorage.setItem(rowId, status);
-        }
 
-        // Fungsi untuk mendapatkan status bookmark dari localStorage
-        function getBookmarkStatus(rowId) {
-            return localStorage.getItem(rowId);
-        }
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        // Fungsi untuk mengubah tampilan ikon bookmark dan mengatur urutan baris
-        function toggleBookmark(id) {
-            var regular = document.getElementById('bookmark-regular-' + id);
-            var solid = document.getElementById('bookmark-solid-' + id);
-            var row = document.getElementById('row-' + id);
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#live_search").keyup(function() {
+            var input = $(this).val();
+            // console.log(input);
+            // alert(input);
 
-            // Toggle display property
-            regular.style.display = regular.style.display === 'none' ? 'inline' : 'none';
-            solid.style.display = solid.style.display === 'none' ? 'inline' : 'none';
+            if(input != ""){
+                $.ajax({
 
-            // Simpan atau hapus status bookmark dari localStorage
-            if (regular.style.display === 'none') {
-                setBookmarkStatus('row-' + id, 'bookmarked');
-                // Pindahkan baris ke atas
-                row.parentNode.insertBefore(row.parentNode.firstChild);
-            } else {
-                setBookmarkStatus('row-' + id, 'unbookmarked');
+                    url:"",
+                    method: "POST",
+                    data={input:input}
+
+                    success:function
+
+                })
+
             }
-        }
-
-        // Fungsi untuk memeriksa status bookmark saat halaman dimuat
-        window.onload = function() {
-            for (var i = 1; i <= totalRows; i++) {
-                var status = getBookmarkStatus('row-' + i);
-                if (status === 'bookmarked') {
-                    // Pindahkan baris ke atas
-                    var row = document.getElementById('row-' + i);
-                    row.parentNode.insertBefore(row, row.parentNode.firstChild);
-                }
-            }
-        }
+        });
+    });
     </script> -->
-
 </body>
 
 </html>

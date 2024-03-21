@@ -1,14 +1,24 @@
 <?php
 require 'dbphp.php';
-if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) {
-    if (cek_USER_and_PASS($_POST["name"], $_POST["passw"])) {
-        header("Location: index.php");
-        exit;
+
+$error_message = '';
+
+if (isset($_POST["submit"])) {
+    $name = $_POST["name"];
+    $passw = $_POST["passw"];
+
+    if (empty($name) || empty($passw)) {
+        $error_message = "Username and password are required.";
     } else {
-        header("Location: login.php");
-        exit;
+        if (cek_USER_and_PASS($name, $passw)) {
+            header("Location: index.php");
+            exit;
+        } else {
+            $error_message = "Invalid username or password";
+        }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,12 +51,12 @@ if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) 
     <div class="w-screen h-screen p-16 bg-bgColor z-10">
 
         <!-- ELLIIPSE START -->
-        <!-- <img class="absolute top-0 right-0 w-screen h-full z-0" src="assets/blurellipse.svg" alt=""> -->
+        <!-- <img class="absolute top-0 left-0 w-screen h-full z-0" src="assets/blurellipse.svg" alt=""> -->
         <!-- ELLIIPSE END -->
 
 
         <!-- HEADER START -->
-        <div class="flex flex-col gap-2 justify-center items-center mb-12">
+        <div class="flex flex-col gap-2 justify-center items-center mb-8">
             <!-- LOGO START -->
             <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
                 <span class="text-white font-bold">
@@ -54,18 +64,24 @@ if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) 
                 </span>
             </div>
             <!-- LOGO END -->
-
             <span class="text-cardData font-bold text-3xl">Login Account</span>
-
         </div>
         <!-- HEADER END -->
 
+        <!-- ERROR MESSAGE START -->
+        <?php if (!empty($error_message)) : ?>
+        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
+        </div>
+        <?php endif; ?>
+        <!-- ERROR MESSAGE END -->
+
 
         <!-- FORM START -->
-        <form class="flex flex-col gap-6" method="post">
+        <form class="flex flex-col gap-6 mt-8" method="post">
 
             <!-- USERNAME START -->
-            <div class="flex flex-col gap-1">
+            <div class=" flex flex-col gap-1">
                 <div>
                     <label class="text-cardData font-semibold" for="a">
                         Username
@@ -99,7 +115,7 @@ if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) 
                 </div>
 
                 <a href="change_PASS.php" class="flex justify-end"><span
-                        class="text-textColor2 font-medium text-sm">Lupa
+                        class="text-textColor2 font-medium text-sm mt-1">Lupa
                         Password</span></a>
 
 
@@ -116,8 +132,8 @@ if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) 
             </div>
 
             <div class="flex justify-center">
-                <span class="text-cardData font-medium text-sm">Don’t have an account? <a class="text-textColor2"
-                        href="signUP_PAGE.php">Sign
+                <span class="text-cardData font-medium text-sm">Don’t have an account? <a
+                        class="text-textColor2 font-bold" href="signUP_PAGE.php">Sign
                         Up</a></span>
             </div>
 
@@ -135,6 +151,20 @@ if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) 
 
 
     </div>
+
+    <script>
+    function validateForm() {
+        var username = document.getElementById('a').value;
+        var password = document.getElementById('p').value;
+
+        if (!username || !password) {
+            document.getElementById('error-message').style.display = 'block';
+            window.scrollTo(0, 0);
+            return false;
+        }
+        return true;
+    }
+    </script>
 </body>
 
 </html>

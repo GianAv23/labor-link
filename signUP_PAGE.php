@@ -1,21 +1,27 @@
 <?php
 require 'dbphp.php';
-if (isset($_POST["name"]) && isset($_POST["passw1"]) && isset($_POST["passw2"]) && isset($_POST["signup"])) {
-    if ($_POST["passw1"] === $_POST["passw2"] && $_POST["name"] !== ""  && $_POST["passw1"] !== "" && $_POST["passw2"] !== "") {
-        $cek = create_NEWUSER($_POST["name"], $_POST["passw1"]);
-        if($cek === "gagal"){
-            header("Location: signUP_PAGE.php");
-            EXIT;
-        }else{
+
+$error_message = '';
+
+if (isset($_POST["signup"])) {
+    $name = $_POST["name"];
+    $passw1 = $_POST["passw1"];
+    $passw2 = $_POST["passw2"];
+
+    if ($passw1 === $passw2 && $name !== "" && $passw1 !== "" && $passw2 !== "") {
+        $cek = create_NEWUSER($name, $passw1);
+        if ($cek === "gagal") {
+            $error_message = "Failed to create user. Please try again.";
+        } else {
             header("Location: login.php");
             exit;
         }
     } else {
-        header("Location: signUP_PAGE.php");
-        exit;
+        $error_message = "Invalid input. Please check your username and passwords.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,9 +51,9 @@ if (isset($_POST["name"]) && isset($_POST["passw1"]) && isset($_POST["passw2"]) 
 </head>
 
 <body>
-    <div class="w-screen h-screen p-16 bg-bgColor z-10">
+    <div class="w-screen min-h-screen p-16 bg-bgColor z-10">
         <!-- HEADER START -->
-        <div class="flex flex-col gap-2 justify-center items-center mb-12">
+        <div class="flex flex-col gap-2 justify-center items-center mb-8">
             <!-- LOGO START -->
             <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
                 <span class="text-white font-bold">
@@ -60,7 +66,17 @@ if (isset($_POST["name"]) && isset($_POST["passw1"]) && isset($_POST["passw2"]) 
 
         </div>
         <!-- HEADER END -->
-        <form class="flex flex-col gap-6" method="post">
+
+        <!-- ERROR MESSAGE START -->
+        <?php if (!empty($error_message)) : ?>
+        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
+        </div>
+        <?php endif; ?>
+        <!-- ERROR MESSAGE END -->
+
+
+        <form class="flex flex-col gap-6 mt-8" method="post">
             <!-- USERNAME START -->
             <div class="flex flex-col gap-1">
                 <div>
@@ -98,6 +114,11 @@ if (isset($_POST["name"]) && isset($_POST["passw1"]) && isset($_POST["passw2"]) 
                     <input type="password" name="passw1" id="p1" placeholder="Enter your password"
                         class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData">
                 </div>
+
+
+                <div>
+                    <span class="text-cardData font-medium text-xs">Min 8 Characters</span>
+                </div>
                 <!-- <label for="a">Masukkan Username :</label>
                 <input type="text" name="name" id="a" /> -->
                 <!-- <label for="p1">Password :</label>
@@ -134,8 +155,8 @@ if (isset($_POST["name"]) && isset($_POST["passw1"]) && isset($_POST["passw2"]) 
             </div>
 
             <div class="flex justify-center">
-                <span class="text-cardData font-medium text-sm">Already have an accout? <a class="text-textColor2"
-                        href="login.php">Log in</a></span>
+                <span class="text-cardData font-medium text-sm">Already have an accout? <a
+                        class="text-textColor2 font-bold" href="login.php">Log in</a></span>
             </div>
 
 

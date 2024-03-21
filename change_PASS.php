@@ -1,21 +1,28 @@
 <?php
 require 'dbphp.php';
+
+$error_message = '';
+
 if (isset($_POST["name"]) && isset($_POST["newpass"]) && isset($_POST["confirpass"]) && isset($_POST["submit"])) {
     if (cek_USERNAME($_POST["name"])) {
         $cek = update_NEW_PASSWORD($_POST["newpass"], $_POST["name"]);
         if($cek === "gagal"){
-            header("Location: change_PASS.php");
-            exit;
+            $error_message = "Failed to update password. Please try again.";
+            // exit;
         }else{
             header("Location: login.php");
             exit;
         }
     } else {
-        header("Location: change_PASS.php");
-        exit;
+        $error_message = "Username not found. Please check your username.";
+        // exit;
     }
 }
+
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +54,7 @@ if (isset($_POST["name"]) && isset($_POST["newpass"]) && isset($_POST["confirpas
     <div class="w-screen h-screen p-16 bg-bgColor z-10">
 
         <!-- HEADER START -->
-        <div class="flex flex-col gap-2 justify-center items-center mb-12">
+        <div class="flex flex-col gap-2 justify-center items-center mb-8">
             <!-- LOGO START -->
             <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
                 <span class="text-white font-bold">
@@ -60,6 +67,14 @@ if (isset($_POST["name"]) && isset($_POST["newpass"]) && isset($_POST["confirpas
 
         </div>
         <!-- HEADER END -->
+
+        <!-- ERROR MESSAGE START -->
+        <?php if (!empty($error_message)) : ?>
+        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
+        </div>
+        <?php endif; ?>
+        <!-- ERROR MESSAGE END -->
 
         <form class="flex flex-col gap-6" method="post">
             <!-- USERNAME START -->
@@ -90,7 +105,7 @@ if (isset($_POST["name"]) && isset($_POST["newpass"]) && isset($_POST["confirpas
             <div class="flex flex-col gap-1">
                 <div>
                     <label class="text-cardData font-semibold" for="p">
-                        Password
+                        New Password
                     </label>
                 </div>
 
@@ -98,6 +113,10 @@ if (isset($_POST["name"]) && isset($_POST["newpass"]) && isset($_POST["confirpas
 
                     <input type="password" name="passw" id="p" placeholder="Enter your password"
                         class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData">
+                </div>
+
+                <div>
+                    <span class="text-cardData font-medium text-xs">Min 8 Characters</span>
                 </div>
                 <!-- <label for="a">Masukkan Username :</label>
                 <input type="text" name="name" id="a" /> -->
@@ -122,6 +141,8 @@ if (isset($_POST["name"]) && isset($_POST["newpass"]) && isset($_POST["confirpas
                     <input type="password" name="confirpass" id="p2" placeholder="Enter your password"
                         class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData">
                 </div>
+
+
 
 
                 <!-- <label for="a">Masukkan Username :</label>

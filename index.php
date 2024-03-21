@@ -137,7 +137,7 @@ if(!isset($_SESSION['id'])){
 
         <!-- DATA START -->
         <div
-            class="bg-bgCardColor/5 w-screen h-screen border-2 border-editBtn border-t-cardData border-r-cardData border-l-cardData rounded-t-3xl flex flex-col items-center pt-5 z-10">
+            class="bg-bgCardColor/5 w-screen h-screen border-2 border-editBtn border-t-cardData border-r-cardData border-l-cardData rounded-t-3xl flex flex-col items-center pt-5 z-10 lg:w-[800px] lg:rounded-t-3xl">
 
             <!-- SEARCH START -->
             <div class="mb-5">

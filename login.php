@@ -21,7 +21,7 @@ if (isset($_POST["name"]) && isset($_POST["submit"]) && isset($_POST["passw"])) 
 
 <body>
     <form action="" method="post">
-        <label for="a">Masukkan Username :</label>
+        <label for="a">Masukkan Usernameee :</label>
         <input type="text" name="name" id="a" />
         <br />
         <label for="p">Password :</label>

@@ -17,7 +17,7 @@ if (isset($_POST["submit"])) {
 
  if(isset($_POST['logout'])) {
             require_once 'logout.php';
-            header("Location: login.php");
+            header("Location: signUP_PAGE.php");
 
             exit;
             
@@ -70,7 +70,7 @@ if(!isset($_SESSION['id'])){
 </head>
 
 <body>
-    <div class="bg-bgColor h-screen w-screen pt-8 px-16 flex flex-col justify-start items-center">
+    <div class="bg-bgColor h-screen w-screen pt-8 px-16 flex flex-col justify-start items-center overflow-hidden">
 
         <!-- ELLIIPSE START -->
         <img class="absolute z-0 top-0 left-0 w-screen h-full" src="assets/blurellipse.svg" alt="">
@@ -119,7 +119,7 @@ if(!isset($_SESSION['id'])){
                             <img class="h-6 w-6" src="assets/add_contact.svg" alt=""></button>
 
                     </form> -->
-                    <a class="bg-cardData/15 rounded-full px-6 text-white font-bold text-3xl items-center border-dashed border-2 mr-2"
+                    <a class="bg-cardData/15 rounded-full px-6 text-white font-bold text-3xl items-center border-dashed border-2 mr-2 flex"
                         href="insert_form.php">
                         <img class="h-6 w-6" src="assets/add_contact.svg" alt=""></a>
 
@@ -151,7 +151,7 @@ if(!isset($_SESSION['id'])){
 
         <!-- DATA START -->1
         <div
-            class="bg-bgCardColor/5 w-screen h-screen border-2 border-editBtn border-t-cardData border-r-cardData border-l-cardData rounded-t-[15%] flex flex-col items-center pt-5 z-10">
+            class="bg-bgCardColor/5 w-screen h-screen border-2 border-editBtn border-t-cardData border-r-cardData border-l-cardData rounded-t-3xl flex flex-col items-center pt-5 z-10">
 
             <!-- SEARCH START -->
             <div class="mb-5">
@@ -163,7 +163,7 @@ if(!isset($_SESSION['id'])){
             <!-- SEARCH END -->
 
 
-            <div class="flex flex-col gap-4 overflow-y-scroll h-72 w-80 rounded-3xl">
+            <div class="flex flex-col gap-4 overflow-y-scroll h-64 w-80 rounded-3xl">
                 <?php
                 //$stmt->execute();
                 // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 

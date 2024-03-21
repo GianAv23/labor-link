@@ -1,8 +1,9 @@
 <?php
 session_start();
-$dsn = "mysql:host=localhost;dbname=labor_link";
-$kunci = new PDO($dsn, "root", "");
-
+define('DSN', 'mysql:host=localhost;dbname=labor_link');
+define('DBUSER', 'root');
+define('DBPASS', '');
+$kunci = new PDO(DSN, DBUSER, DBPASS);
 
 function cek_USER_and_PASS($name, $pass)
 {
@@ -29,8 +30,9 @@ function cek_USERNAME($name)
         return false;
     }
     global $kunci;
-    $sql_CHECKUSERNAME = "SELECT user_name FROM data_user WHERE user_name = '$name'";
-    $result_query = $kunci->query($sql_CHECKUSERNAME);
+    $sql_CHECKUSERNAME = "SELECT user_name FROM data_user WHERE user_name = ?";
+    $result_query = $kunci->prepare($sql_CHECKUSERNAME);
+    $result_query->execute([$name]);
     $result_name = $result_query->fetch(PDO::FETCH_ASSOC);
     if ($result_name["user_name"] == $name) {
         return true;
@@ -48,8 +50,11 @@ function update_NEW_PASSWORD($newPASS, $nameUser)
     }
     $nameUser = strval($nameUser);
     $newENCRYP_PASS = password_hash($newPASS, PASSWORD_BCRYPT);
-    $sql_CHANGE_PASS = "UPDATE data_user SET user_password = '$newENCRYP_PASS' WHERE user_name = '$nameUser'";
-    $result_query = $kunci->query($sql_CHANGE_PASS);
+    $sql_CHANGE_PASS = "UPDATE data_user SET user_password = ? WHERE user_name = ?";
+    $result_query = $kunci->prepare($sql_CHANGE_PASS);
+    $result_query->execute([$newENCRYP_PASS,$nameUser]);
+    //$sql_CHANGE_PASS = "UPDATE data_user SET user_password = '$newENCRYP_PASS' WHERE user_name = '$nameUser'";
+    //$result_query = $kunci->query($sql_CHANGE_PASS);
     return "berhasil";
 }
 
@@ -63,12 +68,16 @@ function create_NEWUSER($name, $pass)
         return "gagal"; // isi sendiri buat signup error message password
     }
     $sql_MAXID = "SELECT MAX(idUSER) FROM data_user";
-    $maxID = $kunci->query($sql_MAXID);
+    $maxID = $kunci->prepare($sql_MAXID);
+    $maxID->execute([]);
     $numID = $maxID->fetch(PDO::FETCH_ASSOC);
     $newID = intval($numID["MAX(idUSER)"]) + 1;
     $newENCRYP_PASS = password_hash($pass, PASSWORD_BCRYPT);
-    $sql_CREATEUSER = "INSERT INTO data_user VALUES ( '$newID' , '$name' , '$newENCRYP_PASS' )";
-    $kunci->query($sql_CREATEUSER);
+    $sql_CREATEUSER = "INSERT INTO data_user VALUES ( ? , ? , ? )";
+    $result_query = $kunci->prepare($sql_CREATEUSER);
+    $result_query->execute([$newID, $name, $newENCRYP_PASS]);
+    //$sql_CREATEUSER = "INSERT INTO data_user VALUES ( '$newID' , '$name' , '$newENCRYP_PASS' )";
+    //$kunci->query($sql_CREATEUSER);
     return "berhasil";
 }
 
@@ -77,9 +86,10 @@ function list_ALL_CONTACT($id)
 {
     global $kunci;
     $id = intval($id);
-    $sql_LISTCONTACT = "SELECT * FROM list_kontak WHERE idUSER = $id ORDER BY book_mark DESC";
+    $sql_LISTCONTACT = "SELECT * FROM list_kontak WHERE idUSER = ? ORDER BY book_mark DESC";
     $allOfList = [];
-    $querLIST = $kunci->query($sql_LISTCONTACT);
+    $querLIST = $kunci->prepare($sql_LISTCONTACT);
+    $querLIST->execute([$id]);
     while ($row = $querLIST->fetch(PDO::FETCH_ASSOC)) {
         $allOfList[] = $row;
     }
@@ -97,9 +107,10 @@ function bookMARK_USER($idBookMark)
     WHEN list_kontak.book_mark = true THEN false
     ELSE true
     END)
-    WHERE list_kontak.idKontak = $idBookMark";
+    WHERE list_kontak.idKontak = ?";
     $allOfList = [];
-    $querLIST = $kunci->query($sql_BOOKMARK);
+    $querLIST = $kunci->prepare($sql_BOOKMARK);
+    $querLIST->execute([$idBookMark]);
     while ($row = $querLIST->fetch(PDO::FETCH_ASSOC)) {
         $allOfList[] = $row;
     }
@@ -110,22 +121,23 @@ function ambil_nama_user($id)
 {
     $id = intval($id);
     global $kunci;
-    $query = "SELECT user_name FROM data_user WHERE idUSER = $id";
-    $result_query = $kunci->query($query);
+    $query = "SELECT user_name FROM data_user WHERE idUSER = ?";
+    $result_query = $kunci->prepare($query);
+    $result_query->execute([$id]);
     $name = $result_query->fetch(PDO::FETCH_ASSOC);
     if ($name !== "") {
         return $name["user_name"];
-    } else {
-        return "";
     }
+    return "Gak ada UserName";
 }
 
 function list_RECENTLY($id){
     global $kunci;
     $id = intval($id);
-    $sql_RECENTLYADD = "SELECT * FROM list_kontak WHERE idUSER = $id ORDER BY idKontak DESC";
+    $sql_RECENTLYADD = "SELECT * FROM list_kontak WHERE idUSER = ? ORDER BY idKontak DESC";
     $allOfList = [];
-    $querLIST = $kunci->query($sql_RECENTLYADD);
+    $querLIST = $kunci->prepare($sql_RECENTLYADD);
+    $querLIST->execute([$id]);
     while( $row = $querLIST->fetch(PDO::FETCH_ASSOC) ){
         $allOfList[] = $row;
     }

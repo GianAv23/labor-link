@@ -1,3 +1,15 @@
+ *{
+ font-size: Figtree;
+ }
+
+ div.overflow-x-scroll {
+ scrollbar-width: none;
+ }
+
+ div.overflow-y-scroll {
+ scrollbar-width: none;
+ }
+
  <?php
     if (isset($_GET['edit_proses'])) {
         require_once 'open_connection.php';

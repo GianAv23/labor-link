@@ -2,6 +2,7 @@
 session_start();
 require_once 'open_connection.php';
 $userkontak;
+$error_message = '';
 
 if (isset($_POST['iniupdate'])) {
 
@@ -15,76 +16,74 @@ if (isset($_POST['iniupdate'])) {
 }
 
 if (isset($_POST['submit'])) {
-    // global $userkontak;
     $idKontak = $_POST['id'];
     $nama_kontak = $_POST['nama_kontak'];
     $nama_perusahaan = $_POST['nama_perusahaan'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
 
-    // Upload foto
-    $target_dir = "file_upload/"; // Folder tempat menyimpan foto
-    $target_file = $target_dir . basename($_FILES["upload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    // Check if file was uploaded successfully
-    if ($_FILES["upload"]["error"] == UPLOAD_ERR_OK) {
-        // Check if file is an actual image
-        $check = getimagesize($_FILES["upload"]["tmp_name"]);
-        if ($check !== false) {
-            $uploadOk = 1;
-        } else {
-            echo "File bukan gambar.";
+    if (!empty($_FILES["upload"]["name"])) {
+  
+        $target_dir = "file_upload/"; 
+        $target_file = $target_dir . basename($_FILES["upload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if(empty($nama_kontak) || empty($nama_perusahaan) || empty($no_telp) || empty($email)){
+    $error_message = "Tolong lengkapi semuanya";
+    $uploadOk = 0;
+}
+
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "svg"
+            && $imageFileType != "gif"
+        ) {
+            echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diperbolehkan.";
             $uploadOk = 0;
         }
-    } else {
-        echo "Maaf, terjadi kesalahan saat mengunggah file.";
-        $uploadOk = 0;
-    }
 
-    // Allow certain file formats
-    if (
-        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "svg"
-        && $imageFileType != "gif"
-    ) {
-        echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diperbolehkan.";
-        $uploadOk = 0;
-    }
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "Maaf, file tidak terunggah.";
-        // if everything is ok, try to upload file
-    } else {
-        if (move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file)) {
-            echo "Foto " . htmlspecialchars(basename($_FILES["upload"]["name"])) . " berhasil diunggah.";
-
-
-            // Simpan path foto ke database jika upload sukses
-            $foto_path = $target_file;
-            $query =
-                "UPDATE list_kontak SET nama_kontak = ?, nama_perusahaan = ?, no_telp = ?, email = ?, foto_path = ? WHERE idKontak = ?";
-            $stmt = $connection->prepare($query);
-            $stmt->execute([$nama_kontak, $nama_perusahaan, $no_telp, $email, $foto_path, $idKontak]);
-
-            if ($stmt->rowCount() > 0) {
-                header('Location: index.php');
-                exit();
-            } else {
-                echo "Gagal menyimpan data.";
-            }
+        if ($uploadOk == 0) {
+            echo "Maaf, file tidak terunggah.";
         } else {
-            echo "Maaf, terjadi kesalahan saat mengunggah file.";
+            if (move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file)) {
+                echo "Foto " . htmlspecialchars(basename($_FILES["upload"]["name"])) . " berhasil diunggah.";
+                $foto_path = $target_file;
+            } else {
+                echo "Maaf, terjadi kesalahan saat mengunggah file.";
+            }
         }
+        $query =
+            "UPDATE list_kontak SET nama_kontak = ?, nama_perusahaan = ?, no_telp = ?, email = ?, foto_path = ? WHERE idKontak = ?";
+        $stmt = $connection->prepare($query);
+        $stmt->execute([$nama_kontak, $nama_perusahaan, $no_telp, $email, $foto_path, $idKontak]);
+
+    } else {
+            if(empty($nama_kontak) || empty($nama_perusahaan) || empty($no_telp) || empty($email)){
+            $error_message = "Tolong lengkapi semuanya";
+            $uploadOk = 0;
+        }
+        $query =
+        "UPDATE list_kontak SET nama_kontak = ?, nama_perusahaan = ?, no_telp = ?, email = ? WHERE idKontak = ?";
+    $stmt = $connection->prepare($query);
+    $stmt->execute([$nama_kontak, $nama_perusahaan, $no_telp, $email, $idKontak]);
+        
+    }
+    
+    if ($stmt->rowCount() > 0) {
+        header('Location: index.php');
+        exit();
+    } else {
+        // echo "Gagal menyimpan data.";
     }
 }
 
-if(!isset($_SESSION['id'])){
+if (!isset($_SESSION['id'])) {
     header("Location: login.php");
-
     exit;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +129,15 @@ if(!isset($_SESSION['id'])){
         </div>
         <!-- HEADER END -->
 
-        <form class="flex flex-col gap-4" method="post" enctype="multipart/form-data">
+        <!-- ERROR MESSAGE START -->
+        <?php if (!empty($error_message)) : ?>
+        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
+        </div>
+        <?php endif; ?>
+        <!-- ERROR MESSAGE END -->
+
+        <form class="flex flex-col gap-4 md:px-44 lg:px-64 xl:px-80" method="post" enctype="multipart/form-data">
 
             <div>
                 <input type="hidden" name="id" value="<?= $userkontak['idKontak'] ?>">
@@ -228,73 +235,6 @@ if(!isset($_SESSION['id'])){
 
             <!-- BUTTON END -->
         </form>
-        <?php
-        // if (isset($_POST['submit'])) {
-        //     // $idKontak = $_POST['idKontak'];
-        //     $nama_kontak = $_POST['nama_kontak'];
-        //     $nama_perusahaan = $_POST['nama_perusahaan'];
-        //     $no_telp = $_POST['no_telp'];
-        //     $email = $_POST['email'];
-
-        //     // Upload foto
-        //     $target_dir = "file_upload/"; // Folder tempat menyimpan foto
-        //     $target_file = $target_dir . basename($_FILES["upload"]["name"]);
-        //     $uploadOk = 1;
-        //     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        //     // Check if file was uploaded successfully
-        //     if ($_FILES["upload"]["error"] == UPLOAD_ERR_OK) {
-        //         // Check if file is an actual image
-        //         $check = getimagesize($_FILES["upload"]["tmp_name"]);
-        //         if ($check !== false) {
-        //             $uploadOk = 1;
-        //         } else {
-        //             echo "File bukan gambar.";
-        //             $uploadOk = 0;
-        //         }
-        //     } else {
-        //         echo "Maaf, terjadi kesalahan saat mengunggah file.";
-        //         $uploadOk = 0;
-        //     }
-
-        //     // Allow certain file formats
-        //     if (
-        //         $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "svg"
-        //         && $imageFileType != "gif"
-        //     ) {
-        //         echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diperbolehkan.";
-        //         $uploadOk = 0;
-        //     }
-
-        //     // Check if $uploadOk is set to 0 by an error
-        //     if ($uploadOk == 0) {
-        //         echo "Maaf, file tidak terunggah.";
-        //         // if everything is ok, try to upload file
-        //     } else {
-        //         if (move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file)) {
-        //             echo "Foto " . htmlspecialchars(basename($_FILES["upload"]["name"])) . " berhasil diunggah.";
-
-
-        //             // Simpan path foto ke database jika upload sukses
-        //             $foto_path = $target_file;
-        //             $query =
-        //                 "UPDATE list_kontak SET nama_kontak = ?, nama_perusahaan = ?, no_telp = ?, email = ?, foto_path = ? WHERE idKontak = ?";
-        //             $stmt = $connection->prepare($query);
-        //             $stmt->execute([$nama_kontak, $nama_perusahaan, $no_telp, $email, $foto_path]);
-
-        //             if ($stmt->rowCount() > 0) {
-        //                 header('Location: index.php');
-        //                 exit();
-        //             } else {
-        //                 echo "Gagal menyimpan data.";
-        //             }
-        //         } else {
-        //             echo "Maaf, terjadi kesalahan saat mengunggah file.";
-        //         }
-        //     }
-        // }
-        ?>
-
 
     </div>
 </body>

@@ -113,17 +113,19 @@ if(!isset($_SESSION['id'])){
         </div>
         <!-- HEADER END -->
 
-        <!-- ERROR MESSAGE START -->
-        <?php if (!empty($error_message)) : ?>
-        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
-            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
-        </div>
-        <?php endif; ?>
-        <!-- ERROR MESSAGE END -->
+
 
         <!-- <div class="container-lg flex flex-col z-10"> -->
 
-        <form class="flex flex-col gap-6 mt-8" method="post" enctype="multipart/form-data">
+        <form class="flex flex-col gap-6 mt-8 md:px-44 lg:px-64 xl:px-80" method="post" enctype="multipart/form-data">
+
+            <!-- ERROR MESSAGE START -->
+            <?php if (!empty($error_message)) : ?>
+            <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+                <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
+            </div>
+            <?php endif; ?>
+            <!-- ERROR MESSAGE END -->
 
             <!-- NAMA KONTAK START -->
             <div class="flex flex-col gap-1">

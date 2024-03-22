@@ -45,6 +45,7 @@ if(!isset($_SESSION['id'])){
                     editBtn: "#161E31",
                     textColor: "#173856",
                     textColor2: "#7DD8F5",
+                    textPerusahaan: "#D9D9D9",
                 },
             }
         }
@@ -55,43 +56,25 @@ if(!isset($_SESSION['id'])){
 </head>
 
 <body>
-    <div class="bg-bgColor h-screen w-screen pt-8 px-16 flex flex-col justify-start items-center overflow-hidden">
+    <div
+        class="relative bg-bgColor h-screen w-screen pt-8 px-16 flex flex-col justify-start items-center overflow-hidden">
 
         <!-- ELLIIPSE START -->
-        <img class="absolute z-0 top-0 left-0 h-full blur-2xl" src="assets/blurellipse.svg" alt="">
+        <img class="absolute z-0 top-0 left-0 w-screen" src="assets/blurellipse.svg" alt="">
         <!-- ELLIIPSE END -->
 
         <!-- ELLIIPSE START -->
         <!-- <img class="absolute z-0 bottom-0 right-0 w-screen h-full" src="assets/blurellipse.svg" alt=""> -->
         <!-- ELLIIPSE END -->
 
-        <div class="container-lg flex flex-col z-10">
+        <div class="container-fluid flex flex-col z-10">
 
             <!-- NAVBAR START -->
             <div
-                class="bg-slate-500/30 px-2 flex rounded-full justify-between items-center w-[300px] h-12 mb-2 shadow-lg md:w-full">
-
-                <div class="pl-2">
-                    <span class="text-white font-bold">
-                        Labor<span class="text-textColor2">Link</span>
-                    </span>
-                </div>
-
-
-                <div class="py-1 px-2 border-2 border-white rounded-full" onclick="toogleModal()">
-                    <div>
-                        <span class=" text-white" ">Hi, <span
-                                class=" font-semibold"><?= $name ?></span></span>
-                    </div>
-                </div>
-            </div>
-            <!-- NAVBAR END -->
-
-            <!-- HEADER START -->
-            <div class="mb-10">
+                class="relative bg-slate-500/30 px-2 flex rounded-full justify-between items-center w-[300px] h-12 mb-4 shadow-lg md:w-full">
 
                 <!-- LOG OUT BUTTON START -->
-                <div class="justify-end gap-3 absolute right-10 max-h-0" id="subModal" style="display: none;">
+                <div class="gap-3 absolute max-h-0 right-0 top-14" id="subModal" style="display:none ;">
 
                     <div class="modalProfile bg-cardData/80 backdrop-blur-sm rounded-xl p-3 items-center">
                         <form class="flex flex-col gap-2" method="post">
@@ -106,6 +89,25 @@ if(!isset($_SESSION['id'])){
                     </div>
                 </div>
                 <!-- LOG OUT BUTTON END -->
+
+                <div class="pl-2">
+                    <span class="text-white font-bold">
+                        Labor<span class="text-textColor2">Link</span>
+                    </span>
+                </div>
+
+
+                <div class="py-1 px-5 border-2 border-white rounded-full cursor-pointer" onclick="toogleModal()">
+                    <div>
+                        <span class=" text-white font-medium" ">Hi, <span
+                                class=" font-bold"><?= $name ?></span></span>
+                    </div>
+                </div>
+            </div>
+            <!-- NAVBAR END -->
+
+            <!-- HEADER START -->
+            <div class="mb-10">
 
 
                 <div class="mb-4">
@@ -139,7 +141,7 @@ if(!isset($_SESSION['id'])){
                             </div>
                             <div class="flex flex-col gap-0">
                                 <span
-                                    class="text-textColor text-xs font-semibold"><?= $data['nama_perusahaan'] ?></span>
+                                    class="flex justify-center bg-textPerusahaan/50 px-2 text-textColor/70 text-xs font-semibold rounded-full"><?= $data['nama_perusahaan'] ?></span>
                                 <span class="text-textColor text-sm font-bold"> <?= $data['nama_kontak'] ?></span>
                                 <!-- <span class="text-white"> <?= $data['prodi'] ?></span> -->
                             </div>
@@ -154,10 +156,10 @@ if(!isset($_SESSION['id'])){
 
         <!-- DATA START -->
         <div
-            class="bg-bgCardColor/5 w-screen h-screen border-2 border-editBtn border-t-cardData border-r-cardData border-l-cardData rounded-t-3xl flex flex-col items-center pt-5 z-10 lg:w-[800px] lg:rounded-t-3xl">
+            class="bg-bgCardColor/10 backdrop-blur-3xl w-screen h-screen border-2 border-none border-t-cardData border-r-cardData border-l-cardData rounded-t-3xl flex flex-col items-center pt-5 z-10 md:w-[600px] lg:w-[800px] lg:rounded-t-3xl border-gradient">
 
             <!-- SEARCH START -->
-            <div class="mb-5">
+            <div class="mb-6">
 
                 <input
                     class="text-cardData bg-bgColor/50 w-64 font-medium rounded-full px-3 py-1 border-2 border-textColor2/30"
@@ -170,13 +172,14 @@ if(!isset($_SESSION['id'])){
 
 
 
-            <div class="flex flex-col gap-4 overflow-y-scroll h-64 w-80 rounded-3xl">
+            <div
+                class="flex flex-col flex-grow gap-4 overflow-y-scroll h-96 w-80 rounded-3xl mb-4 md:w-96 lg:h-96 lg:gap-6 lg:flex-grow md:flex-grow">
                 <?php
                 //$stmt->execute();
                 // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
                 foreach ($data_kontak as $data) : ?>
 
-                <div class="bg-slate-50 h-48 w-80 p-3 rounded-3xl flex flex-col shrink-0">
+                <div class=" bg-slate-50 h-48 w-full p-3 rounded-3xl flex flex-col shrink-0">
 
                     <div class="flex flex-row justify-between mr-2">
                         <!-- PROFILE PICTURE & NAME START -->
@@ -187,7 +190,7 @@ if(!isset($_SESSION['id'])){
 
                             <div class="flex flex-col">
                                 <span
-                                    class="font-semibold text-textColor text-md"><?= $data['nama_perusahaan'] ?></span>
+                                    class="flex justify-center bg-textPerusahaan/50 px-2 text-textColor/70 text-base font-semibold rounded-full"><?= $data['nama_perusahaan'] ?></span>
                                 <span id="name"
                                     class="font-bold text-textColor text-lg"><?= $data['nama_kontak'] ?></span>
                             </div>
@@ -198,12 +201,17 @@ if(!isset($_SESSION['id'])){
                         <div class="flex items-center justify-end">
                             <form action="" method="post">
                                 <button class="bookmark-btn" type="submit" name="submit"
-                                    value="<?= $data['idKontak'] ?>"> Bookmark
-                                    <!-- <img alt="Bookmark" class="bookmark-img"  -->
+                                    value="<?= $data['idKontak'] ?>">
+                                    <?php if ($data['book_mark'] == true) : ?>
+                                    <img class="w-6 h-6" src="assets/bookmark-solid.svg" alt="Bookmarked">
+                                    <?php else : ?>
+                                    <img class="w-6 h-6" src="assets/bookmark-regular.svg" alt="Bookmark">
+                                    <?php endif; ?>
                                 </button>
                             </form>
                         </div>
                         <!-- BOOKMARK BUTTON -->
+
 
 
 
@@ -219,7 +227,7 @@ if(!isset($_SESSION['id'])){
                             <form method="post" action="delete_proses.php">
                                 <input type="hidden" name="id" value="<?= $data['idKontak'] ?>">
                                 <button
-                                    class="w-36 h-8 bg-cardData rounded-full px-3 border-2 border-dashed border-textColor/50 flex flex-row items-center justify-center gap-2"
+                                    class="w-36 h-8 bg-cardData rounded-full px-3 border-2 border-dashed border-textColor/50 flex flex-row items-center justify-center gap-2 md:w-44"
                                     type="submit">
 
                                     <img class="w-4 h-4" src="assets/deleteBtn.svg" alt="">
@@ -231,7 +239,7 @@ if(!isset($_SESSION['id'])){
                             <form method="post" action="edit_proses.php">
                                 <!-- <input type="hidden" name="id" value="<?= $row['id'] ?>"> -->
                                 <button
-                                    class="w-36 h-8 bg-editBtn rounded-full px-3 text-white font-semibold flex flex-row items-center justify-center gap-2"
+                                    class="w-36 h-8 bg-editBtn rounded-full px-3 text-white font-semibold flex flex-row items-center justify-center gap-2 md:w-44"
                                     type="submit" name="iniupdate" value="<?= $data['idKontak'] ?>">
 
                                     <img class="w-4 h-4" src="assets/editBtn.svg" alt="">
@@ -250,6 +258,7 @@ if(!isset($_SESSION['id'])){
         </div>
         <!-- DATA END -->
 
+
     </div>
 
     <script src="search_JS.js"></script>
@@ -264,25 +273,6 @@ if(!isset($_SESSION['id'])){
             subModal.style.display = "none";
         }
     }
-
-
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     const bookmarkBtn = document.querySelector('.bookmark-btn');
-
-    //     // Tambahkan event listener untuk mendeteksi klik pada tombol bookmark
-    //     bookmarkBtn.addEventListener('click', function(e) {
-    //         e.preventDefault();
-
-    //         // Cek apakah tombol sudah di-bookmark atau belum
-    //         if (bookmarkBtn.classList.contains('bookmarked')) {
-    //             bookmarkBtn.style.backgroundImage = 'url(assets/bookmark-regular.svg)';
-    //             bookmarkBtn.classList.remove('bookmarked');
-    //         } else {
-    //             bookmarkBtn.style.backgroundImage = 'url(assets/bookmark-solid.svg)';
-    //             bookmarkBtn.classList.add('bookmarked');
-    //         }
-    //     });
-    // });
     </script>
 
 

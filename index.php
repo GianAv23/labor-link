@@ -69,7 +69,8 @@ if(!isset($_SESSION['id'])){
 
             <!-- NAVBAR START -->
             <div
-                class="bg-slate-500/30 px-2 flex rounded-full justify-between items-center w-[300px] h-12 mb-6 shadow-lg md:w-[500px]">
+                class="bg-slate-500/30 px-2 flex rounded-full justify-between items-center w-[300px] h-12 mb-2 shadow-lg md:w-full">
+
                 <div class="pl-2">
                     <span class="text-white font-bold">
                         Labor<span class="text-textColor2">Link</span>
@@ -77,24 +78,34 @@ if(!isset($_SESSION['id'])){
                 </div>
 
 
-                <div class="py-1 px-2 border-2 border-white rounded-full">
+                <div class="py-1 px-2 border-2 border-white rounded-full" onclick="toogleModal()">
                     <div>
-                        <span class="text-white">Hi, <span class="font-semibold"><?= $name ?></span></span>
+                        <span class=" text-white" ">Hi, <span
+                                class=" font-semibold"><?= $name ?></span></span>
                     </div>
                 </div>
             </div>
             <!-- NAVBAR END -->
 
             <!-- HEADER START -->
-            <div class="mb-12">
-                <!-- LOGOUT BUTTON START -->
-                <div>
-                    <form method="post">
-                        <button class="bg-red-400 text-white font-semibold px-2 items-center rounded-full" type="submit"
-                            name="logout">Log Out</button>
-                    </form>
+            <div class="mb-10">
+
+                <!-- LOG OUT BUTTON START -->
+                <div class="justify-end gap-3 absolute right-10 max-h-0" id="subModal" style="display: none;">
+
+                    <div class="modalProfile bg-cardData/80 backdrop-blur-sm rounded-xl p-3 items-center">
+                        <form class="flex flex-col gap-2" method="post">
+                            <div>
+                                <span class="font-semibold"><?= $name ?></span>
+                            </div>
+                            <button
+                                class="bg-bgColor/80 rounded-full border-2 border-dashed border-cardData/50 px-3 py-2"
+                                type="submit" name="logout"><span class="text-cardData font-semibold text-sm">Log
+                                    Out</span></button>
+                        </form>
+                    </div>
                 </div>
-                <!-- LOGOUT BUTTON END -->
+                <!-- LOG OUT BUTTON END -->
 
 
                 <div class="mb-4">
@@ -181,16 +192,19 @@ if(!isset($_SESSION['id'])){
                                     class="font-bold text-textColor text-lg"><?= $data['nama_kontak'] ?></span>
                             </div>
                         </div>
+                        <!-- PROFILE PICTURE & NAME END -->
 
-                        <!-- PROFILE PICTURE & NAME START -->
+                        <!-- BOOKMARK BUTTON -->
                         <div class="flex items-center justify-end">
                             <form action="" method="post">
-                                <button class="" type="submit" name="submit"
-                                    value="<?= $data['idKontak'] ?>">bookmark</button>
+                                <button class="bookmark-btn" type="submit" name="submit"
+                                    value="<?= $data['idKontak'] ?>"> Bookmark
+                                    <!-- <img alt="Bookmark" class="bookmark-img"  -->
+                                </button>
                             </form>
-
-                            <!-- <img src="assets/bookmark-regular.svg" class="w-5" alt=""> -->
                         </div>
+                        <!-- BOOKMARK BUTTON -->
+
 
 
                     </div>
@@ -239,6 +253,48 @@ if(!isset($_SESSION['id'])){
     </div>
 
     <script src="search_JS.js"></script>
+
+    <script>
+    let subModal = document.getElementById("subModal");
+
+    function toogleModal() {
+        if (subModal.style.display === "none") {
+            subModal.style.display = "block";
+        } else {
+            subModal.style.display = "none";
+        }
+    }
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const bookmarkBtn = document.querySelector('.bookmark-btn');
+
+    //     // Tambahkan event listener untuk mendeteksi klik pada tombol bookmark
+    //     bookmarkBtn.addEventListener('click', function(e) {
+    //         e.preventDefault();
+
+    //         // Cek apakah tombol sudah di-bookmark atau belum
+    //         if (bookmarkBtn.classList.contains('bookmarked')) {
+    //             bookmarkBtn.style.backgroundImage = 'url(assets/bookmark-regular.svg)';
+    //             bookmarkBtn.classList.remove('bookmarked');
+    //         } else {
+    //             bookmarkBtn.style.backgroundImage = 'url(assets/bookmark-solid.svg)';
+    //             bookmarkBtn.classList.add('bookmarked');
+    //         }
+    //     });
+    // });
+    </script>
+
+
+
+    <!-- <script>
+    const bookmarkBtn = document.querySelector(".bookmark-btn");
+
+    bookmarkBtn.addEventListener("click", function() {
+        bookmarkBtn.classList.toggle("bookmarked");
+    });
+    </script> -->
+
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 

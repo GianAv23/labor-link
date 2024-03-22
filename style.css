@@ -1,17 +1,22 @@
- @tailwind base;
- @tailwind components;
- @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
  
- @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
- body {
+body {
      font-family: "Figtree", sans-serif;
  }
 
-  div.overflow-x-scroll {
+div.overflow-x-scroll {
       scrollbar-width: none;
   }
 
-  div.overflow-y-scroll {
+div.overflow-y-scroll {
       scrollbar-width: none;
   }
+
+.bookmark-btn {
+    background-repeat: no-repeat;
+    /* Mengatur agar gambar tidak diulang */
+}

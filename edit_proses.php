@@ -2,6 +2,7 @@
 session_start();
 require_once 'open_connection.php';
 $userkontak;
+
 if (isset($_POST['iniupdate'])) {
 
     $id = $_POST['iniupdate'];

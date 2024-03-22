@@ -255,3 +255,14 @@
  <!-- <script src="dataTables.js"></script> -->
  <!-- <script src="dataTablesTailwind.js"></script> -->
  <!-- <script src="search_JS.js"></script> -->
+
+
+ // if (isset($_POST["submit"])) {
+ // $check = getimagesize($_FILES["upload"]["tmp_name"]);
+ // if ($check !== false) {
+ // $uploadOk = 1;
+ // } else {
+ // echo "File bukan gambar.";
+ // $uploadOk = 0;
+ // }
+ // }

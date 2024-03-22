@@ -1,53 +1,43 @@
 <?php
 session_start();
+
+$error_message = '';
+
 if (isset($_POST['submit'])) {
     require_once 'open_connection.php';
-
-    // $idKontak = $_POST['idKontak'];
     $nama_kontak = strval($_POST['nama_kontak']);
-    $nama_perusahaan = $_POST['nama_perusahaan'];
-    $no_telp = $_POST['no_telp'];
-    $email = $_POST['email'];
+    $nama_perusahaan = strval($_POST['nama_perusahaan']);
+    $no_telp = strval($_POST['no_telp']);
+    $email = strval($_POST['email']);
 
-    // Upload foto
-    $target_dir = "file_upload/"; // Folder tempat menyimpan foto
+    $target_dir = "file_upload/"; 
     $target_file = $target_dir . basename($_FILES["upload"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    // Check if image file is a actual image or fake image
-    if (isset($_POST["submit"])) {
-        $check = getimagesize($_FILES["upload"]["tmp_name"]);
-        if ($check !== false) {
-            $uploadOk = 1;
-        } else {
-            echo "File bukan gambar.";
-            $uploadOk = 0;
-        }
-    }
+    if(empty($nama_kontak) || empty($nama_perusahaan) || empty($no_telp) || empty($email) || empty($target_file)){
+    $error_message = "Tolong lengkapi semuanya";
+    $uploadOk = 0;
+}
 
-    // Allow certain file formats
     if (
-        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "svg"
-        && $imageFileType != "gif"
+        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "svg" && $imageFileType != "gif"
     ) {
-        echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diperbolehkan.";
+        $error_message = "Tolong lengkapi semuanya";
         $uploadOk = 0;
     }
 
-    // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        echo "Maaf, file tidak terunggah.";
-        // if everything is ok, try to upload file
+        $error_message = "Tolong lengkapi semuanya";
+
     } else {
         if (move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file)) {
             echo "Foto " . htmlspecialchars(basename($_FILES["upload"]["name"])) . " berhasil diunggah.";
         } else {
-            echo "Maaf, terjadi kesalahan saat mengunggah file.";
+            $error_message = "Error uploading, try again";
         }
     }
 
-    // Simpan path foto ke database jika upload sukses
     if ($uploadOk == 1) {
 
         $foto_path = $target_file;
@@ -55,14 +45,11 @@ if (isset($_POST['submit'])) {
         $stmt = $connection->prepare($query);
         $stmt->execute([$nama_kontak, $nama_perusahaan, $no_telp, $email, $foto_path, $_SESSION['id']]);
 
-        // $stmt->execute([$nama_kontak, $nama_perusahaan, $no_telp, $email, $foto_path, $_POST['inigua']]);
-
-        
         if ($stmt->rowCount() > 0) {
             header("Location: http://localhost/labor-link/index.php");
             exit();
         } else {
-            echo "Gagal menyimpan data.";
+            $error_message = "Gagal menyimpan data";
         }
     }
 
@@ -126,72 +113,80 @@ if(!isset($_SESSION['id'])){
         </div>
         <!-- HEADER END -->
 
-        <div class="container-lg flex flex-col z-10">
+        <!-- ERROR MESSAGE START -->
+        <?php if (!empty($error_message)) : ?>
+        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
+        </div>
+        <?php endif; ?>
+        <!-- ERROR MESSAGE END -->
 
-            <form class="flex flex-col gap-6" method="post" enctype="multipart/form-data">
+        <!-- <div class="container-lg flex flex-col z-10"> -->
 
-                <!-- NAMA KONTAK START -->
-                <div class="flex flex-col gap-1">
-                    <div>
-                        <label class="text-cardData font-semibold" for="nama_kontak">
-                            Nama Kontak
-                        </label>
-                    </div>
-                    <div>
-                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_kontak"
-                            type="text" name="nama_kontak">
-                    </div>
+        <form class="flex flex-col gap-6 mt-8" method="post" enctype="multipart/form-data">
+
+            <!-- NAMA KONTAK START -->
+            <div class="flex flex-col gap-1">
+                <div>
+                    <label class="text-cardData font-semibold" for="nama_kontak">
+                        Nama Kontak
+                    </label>
                 </div>
-                <!-- NAMA KONTAK END -->
-
-                <!-- NAMA PERUSAHAAN START -->
-                <div class="">
-                    <div>
-                        <label class=" text-cardData font-semibold" for="nama_perusahaan">
-                            Nama Perusahaan
-                        </label>
-                    </div>
-                    <div>
-                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_perusahaan"
-                            type="text" name="nama_perusahaan">
-                    </div>
+                <div>
+                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_kontak"
+                        type="text" name="nama_kontak">
                 </div>
-                <!-- NAMA PERUSAHAAN END -->
+            </div>
+            <!-- NAMA KONTAK END -->
 
-                <!-- NO TELP START -->
-                <div class="">
-                    <div>
-                        <label class=" text-cardData font-semibold" for="prodi">
-                            No. Telp
-                        </label>
-                    </div>
-                    <div>
-                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="no_telp"
-                            type="text" name="no_telp">
-                    </div>
+            <!-- NAMA PERUSAHAAN START -->
+            <div class="">
+                <div>
+                    <label class=" text-cardData font-semibold" for="nama_perusahaan">
+                        Nama Perusahaan
+                    </label>
                 </div>
-                <!-- NO TELP END -->
-
-                <!-- EMAIL START -->
-                <div class="">
-                    <div>
-                        <label class=" text-cardData font-semibold" for="email">
-                            Email
-                        </label>
-                    </div>
-                    <div>
-                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="email" type="text"
-                            name="email">
-                    </div>
+                <div>
+                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_perusahaan"
+                        type="text" name="nama_perusahaan">
                 </div>
-                <!-- EMAIL END -->
+            </div>
+            <!-- NAMA PERUSAHAAN END -->
 
-                <!-- UPLOAD START -->
-                <div class="mb-4 gap-2 flex flex-col">
-                    <label for="upload" class="text-cardData font-semibold">Upload</label>
-                    <div>
+            <!-- NO TELP START -->
+            <div class="">
+                <div>
+                    <label class=" text-cardData font-semibold" for="prodi">
+                        No. Telp
+                    </label>
+                </div>
+                <div>
+                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="no_telp" type="text"
+                        name="no_telp">
+                </div>
+            </div>
+            <!-- NO TELP END -->
 
-                        <input type="file" class="w-full text-sm text-slate-500 
+            <!-- EMAIL START -->
+            <div class="">
+                <div>
+                    <label class=" text-cardData font-semibold" for="email">
+                        Email
+                    </label>
+                </div>
+                <div>
+                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="email" type="text"
+                        name="email">
+                </div>
+            </div>
+            <!-- EMAIL END -->
+
+            <!-- UPLOAD START -->
+            <div class="mb-4 gap-2 flex flex-col">
+                <label for="upload" class="text-cardData font-semibold">Upload</label>
+                <div>
+
+                    <input type="file" class="w-full text-sm text-slate-500 
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-lg file:border-0
                     file:text-sm file:font-semibold
@@ -199,26 +194,26 @@ if(!isset($_SESSION['id'])){
                     hover:file:bg-textColor hover:file:text-cardData
                     " id="upload" name="upload">
 
-                    </div>
                 </div>
-                <!-- UPLOAD END -->
+            </div>
+            <!-- UPLOAD END -->
 
-                <!-- BUTTON START -->
-                <div class="flex flex-row gap-2">
+            <!-- BUTTON START -->
+            <div class="flex flex-row gap-2">
 
-                    <a href="index.php"
-                        class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
-                        <span class="text-cardData font-bold">Cancel</span>
-                    </a>
+                <a href="index.php"
+                    class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
+                    <span class="text-cardData font-bold">Cancel</span>
+                </a>
 
-                    <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
-                        <span class="text-textColor font-bold">Submit</span>
-                    </button>
+                <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
+                    <span class="text-textColor font-bold">Submit</span>
+                </button>
 
-                </div>
+            </div>
 
-                <!-- BUTTON END -->
-        </div>
+            <!-- BUTTON END -->
+            <!-- </div> -->
     </div>
 
     </form>

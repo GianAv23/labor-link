@@ -219,10 +219,6 @@ if(!isset($_SESSION['id'])){
                     class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
                     <span class="text-cardData font-bold">Cancel</span>
                 </a>
-
-
-
-
                 <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
                     <span class="text-textColor font-bold">Submit</span>
                 </button>

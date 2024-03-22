@@ -77,17 +77,16 @@ if(!isset($_SESSION['id'])){
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
+    <title>Add Contact | LaborLink</title>
     <script>
     tailwind.config = {
         theme: {
@@ -104,13 +103,6 @@ if(!isset($_SESSION['id'])){
         }
     }
     </script>
-    <title>Insert Proses PHP</title>
-    <style>
-    body {
-        font-family: 'Figtree', sans-serif;
-        background-color: #f5f5f5;
-    }
-    </style>
 </head>
 
 <body>
@@ -120,36 +112,34 @@ if(!isset($_SESSION['id'])){
         <!-- <img class="absolute z-0 top-0 left-0 w-screen h-full" src="assets/blurellipse.svg" alt=""> -->
         <!-- ELLIIPSE END -->
 
-        <div class="container-lg flex flex-col z-10">
 
+        <!-- HEADER START -->
+        <div class="flex flex-col gap-2 justify-center items-center mb-8">
             <!-- LOGO START -->
-            <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center mb-4">
+            <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
                 <span class="text-white font-bold">
                     Labor<span class="text-textColor2">Link</span>
                 </span>
             </div>
             <!-- LOGO END -->
+            <span class="text-cardData font-bold text-3xl">Add Contact</span>
+        </div>
+        <!-- HEADER END -->
 
-
-            <!-- HEADER START -->
-            <div class="mb-4">
-                <span class="text-cardData font-bold text-2xl">Add New Contact</span>
-            </div>
-            <!-- HEADER END -->
-
+        <div class="container-lg flex flex-col z-10">
 
             <form class="flex flex-col gap-6" method="post" enctype="multipart/form-data">
+
                 <!-- NAMA KONTAK START -->
-                <div class="">
+                <div class="flex flex-col gap-1">
                     <div>
-                        <label class="text-cardData font-medium" for="nama_kontak">
+                        <label class="text-cardData font-semibold" for="nama_kontak">
                             Nama Kontak
                         </label>
                     </div>
                     <div>
-                        <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-slate-500"
-                            id="nama_kontak" type="text" name="nama_kontak">
+                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_kontak"
+                            type="text" name="nama_kontak">
                     </div>
                 </div>
                 <!-- NAMA KONTAK END -->
@@ -157,14 +147,13 @@ if(!isset($_SESSION['id'])){
                 <!-- NAMA PERUSAHAAN START -->
                 <div class="">
                     <div>
-                        <label class=" text-cardData font-medium" for="nama_perusahaan">
+                        <label class=" text-cardData font-semibold" for="nama_perusahaan">
                             Nama Perusahaan
                         </label>
                     </div>
                     <div>
-                        <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-slate-500"
-                            id="nama_perusahaan" type="text" name="nama_perusahaan">
+                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_perusahaan"
+                            type="text" name="nama_perusahaan">
                     </div>
                 </div>
                 <!-- NAMA PERUSAHAAN END -->
@@ -172,14 +161,13 @@ if(!isset($_SESSION['id'])){
                 <!-- NO TELP START -->
                 <div class="">
                     <div>
-                        <label class=" text-cardData font-medium" for="prodi">
+                        <label class=" text-cardData font-semibold" for="prodi">
                             No. Telp
                         </label>
                     </div>
                     <div>
-                        <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-slate-500"
-                            id="no_telp" type="text" name="no_telp">
+                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="no_telp"
+                            type="text" name="no_telp">
                     </div>
                 </div>
                 <!-- NO TELP END -->
@@ -187,29 +175,28 @@ if(!isset($_SESSION['id'])){
                 <!-- EMAIL START -->
                 <div class="">
                     <div>
-                        <label class=" text-cardData font-medium" for="email">
+                        <label class=" text-cardData font-semibold" for="email">
                             Email
                         </label>
                     </div>
                     <div>
-                        <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-slate-500"
-                            id="email" type="text" name="email">
+                        <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="email" type="text"
+                            name="email">
                     </div>
                 </div>
                 <!-- EMAIL END -->
 
                 <!-- UPLOAD START -->
                 <div class="mb-4 gap-2 flex flex-col">
-                    <label for="upload" class="text-cardData font-medium">Upload</label>
+                    <label for="upload" class="text-cardData font-semibold">Upload</label>
                     <div>
 
-                        <input type="file" class="w-full text-sm text-slate-500
+                        <input type="file" class="w-full text-sm text-slate-500 
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-lg file:border-0
                     file:text-sm file:font-semibold
-                    file:bg-slate-200 file:text-slate-900
-                    hover:file:bg-violet-100
+                    file:bg-textColor2 file:text-slate-900
+                    hover:file:bg-textColor hover:file:text-cardData
                     " id="upload" name="upload">
 
                     </div>
@@ -217,12 +204,15 @@ if(!isset($_SESSION['id'])){
                 <!-- UPLOAD END -->
 
                 <!-- BUTTON START -->
-                <div class="">
+                <div class="flex flex-row gap-2">
 
-                    <button
-                        class="w-full shadow bg-blue-500 hover:bg-blue-900 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-lg"
-                        type="submit" name="submit">
-                        Submit
+                    <a href="index.php"
+                        class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
+                        <span class="text-cardData font-bold">Cancel</span>
+                    </a>
+
+                    <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
+                        <span class="text-textColor font-bold">Submit</span>
                     </button>
 
                 </div>

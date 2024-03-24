@@ -5,7 +5,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
 body {
-     font-family: "Figtree", sans-serif;
+     font-family: "Figtree", sans-serif; 
+     overflow-x: hidden;
+     
  }
 
 div.overflow-x-scroll {
@@ -18,10 +20,8 @@ div.overflow-y-scroll {
 
 .bookmark-btn {
     background-repeat: no-repeat;
-    /* Mengatur agar gambar tidak diulang */
 }
 
-  /* Animasi fade in */
   @keyframes fadeIn {
       from {
           opacity: 0;
@@ -32,7 +32,6 @@ div.overflow-y-scroll {
       }
   }
 
-  /* Animasi fade out */
   @keyframes fadeOut {
       from {
           opacity: 1;
@@ -43,13 +42,11 @@ div.overflow-y-scroll {
       }
   }
 
-  /* Pengaturan tampilan awal */
   #subModal {
       display: none;
       animation: fadeIn 0.5s ease;
   }
 
-  /* Pengaturan tampilan setelah di-toggle */
   #subModal.show {
       display: block;
       animation: fadeOut 0.5s ease;

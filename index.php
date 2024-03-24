@@ -79,10 +79,9 @@ if(!isset($_SESSION['id'])){
                     <div class="modalProfile bg-cardData/80 backdrop-blur-sm rounded-xl p-3 items-center">
                         <form class="flex flex-col gap-2" method="post">
                             <div>
-                                <span class="font-semibold"><?= $name ?></span>
+                                <span class="font-semibold text-textColor text-lg"><?= $name ?></span>
                             </div>
-                            <button
-                                class="bg-bgColor/80 rounded-full border-2 border-dashed border-cardData/50 px-3 py-2"
+                            <button class="bg-bgColor/80 rounded-full border-2 border-cardData/50 px-3 py-2"
                                 type="submit" name="logout"><span class="text-cardData font-semibold text-sm">Log
                                     Out</span></button>
                         </form>
@@ -103,6 +102,7 @@ if(!isset($_SESSION['id'])){
                                 class=" font-bold"><?= $name ?></span></span>
                     </div>
                 </div>
+
             </div>
             <!-- NAVBAR END -->
 

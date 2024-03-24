@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
         if(empty($nama_kontak) || empty($nama_perusahaan) || empty($no_telp) || empty($email)){
-    $error_message = "Tolong lengkapi semuanya";
+    $error_message = "Please upload files in JPG, PNG, JPEG, SVG, or GIF format";
     $uploadOk = 0;
 }
 
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 
     } else {
             if(empty($nama_kontak) || empty($nama_perusahaan) || empty($no_telp) || empty($email)){
-            $error_message = "Tolong lengkapi semuanya";
+            $error_message = "Please upload files in JPG, PNG, JPEG, SVG, or GIF format";
             $uploadOk = 0;
         }
         $query =
@@ -114,129 +114,141 @@ if (!isset($_SESSION['id'])) {
 </head>
 
 <body>
-    <div class="w-screen min-h-screen p-16 bg-bgColor">
+    <div class="w-screen min-h-screen">
 
-        <!-- HEADER START -->
-        <div class="flex flex-col gap-2 justify-center items-center mb-8">
-            <!-- LOGO START -->
-            <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
-                <span class="text-white font-bold">
-                    Labor<span class="text-textColor2">Link</span>
-                </span>
-            </div>
-            <!-- LOGO END -->
-            <span class="text-cardData font-bold text-3xl">Edit Contact</span>
-        </div>
-        <!-- HEADER END -->
+        <!-- <img class="absolute w-screen h-full object-cover" src="assets/bgForm.png" alt=""> -->
 
-        <!-- ERROR MESSAGE START -->
-        <?php if (!empty($error_message)) : ?>
-        <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
-            <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
-        </div>
-        <?php endif; ?>
-        <!-- ERROR MESSAGE END -->
+        <div class="absolute bg-bgColor/95">
 
-        <form class="flex flex-col gap-4 md:px-44 lg:px-64 xl:px-80" method="post" enctype="multipart/form-data">
+            <!-- ELLIIPSE START -->
+            <img class="absolute z-0 top-0 left-0 w-screen h-screen" src="assets/blurellipse.svg" alt="">
+            <!-- ELLIIPSE END -->
 
-            <div>
-                <input type="hidden" name="id" value="<?= $userkontak['idKontak'] ?>">
-            </div>
+            <div class="w-screen min-h-screen flex flex-col justify-center py-10 px-8">
 
-            <!-- NAMA KONTAK START -->
-            <div class="flex flex-col gap-1">
-                <div>
-                    <label class="text-cardData font-semibold" for="nim">
-                        Nama Kontak
-                    </label>
+                <!-- HEADER START -->
+                <div class="flex flex-col gap-2 justify-center items-center mb-8">
+                    <!-- LOGO START -->
+                    <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
+                        <span class="text-white font-bold">
+                            Labor<span class="text-textColor2">Link</span>
+                        </span>
+                    </div>
+                    <!-- LOGO END -->
+                    <span class="text-cardData font-bold text-3xl">Edit Contact</span>
                 </div>
+                <!-- HEADER END -->
 
-                <div>
-                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_kontak"
-                        type="text" name="nama_kontak" value="<?= $userkontak['nama_kontak'] ?>">
+                <!-- ERROR MESSAGE START -->
+                <?php if (!empty($error_message)) : ?>
+                <div id="error-message" class="flex p-3 justify-center bg-textColor2/30 rounded-lg">
+                    <span class="text-textColor2 font-medium text-sm flex text-center"><?= $error_message ?></span>
                 </div>
-            </div>
-            <!-- NAMA KONTAK END -->
+                <?php endif; ?>
+                <!-- ERROR MESSAGE END -->
+
+                <form class="z-10 flex flex-col gap-4 md:px-44 lg:px-64 xl:px-80" method="post"
+                    enctype="multipart/form-data">
+
+                    <div>
+                        <input type="hidden" name="id" value="<?= $userkontak['idKontak'] ?>">
+                    </div>
+
+                    <!-- NAMA KONTAK START -->
+                    <div class="flex flex-col gap-1">
+                        <div>
+                            <label class="text-cardData font-semibold" for="nim">
+                                Nama Kontak
+                            </label>
+                        </div>
+
+                        <div>
+                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_kontak"
+                                type="text" name="nama_kontak" value="<?= $userkontak['nama_kontak'] ?>">
+                        </div>
+                    </div>
+                    <!-- NAMA KONTAK END -->
 
 
-            <!-- NAMA PERUSAHAAN START -->
-            <div class="flex flex-col gap-1">
-                <div>
-                    <label class="text-cardData font-semibold" for="nama">
-                        Nama Perusahaan
-                    </label>
-                </div>
-                <div>
-                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_perusahaan"
-                        type="text" name="nama_perusahaan" value="<?= $userkontak['nama_perusahaan'] ?>">
-                </div>
-            </div>
-            <!-- NAMA PERUSAHAAN END -->
+                    <!-- NAMA PERUSAHAAN START -->
+                    <div class="flex flex-col gap-1">
+                        <div>
+                            <label class="text-cardData font-semibold" for="nama">
+                                Nama Perusahaan
+                            </label>
+                        </div>
+                        <div>
+                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData"
+                                id="nama_perusahaan" type="text" name="nama_perusahaan"
+                                value="<?= $userkontak['nama_perusahaan'] ?>">
+                        </div>
+                    </div>
+                    <!-- NAMA PERUSAHAAN END -->
 
-            <!-- NO TELP START -->
-            <div class="flex flex-col gap-1">
-                <div>
-                    <label class=" text-cardData font-semibold" for="no_telp">
-                        No. Telp
-                    </label>
-                </div>
-                <div>
-                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="no_telp" type="text"
-                        name="no_telp" value="<?= $userkontak['no_telp'] ?>">
-                </div>
-            </div>
-            <!-- NO TELP END -->
+                    <!-- NO TELP START -->
+                    <div class="flex flex-col gap-1">
+                        <div>
+                            <label class=" text-cardData font-semibold" for="no_telp">
+                                No. Telp
+                            </label>
+                        </div>
+                        <div>
+                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="no_telp"
+                                type="text" name="no_telp" value="<?= $userkontak['no_telp'] ?>">
+                        </div>
+                    </div>
+                    <!-- NO TELP END -->
 
-            <!-- EMAIL START -->
-            <div class="">
-                <div>
-                    <label class=" text-cardData font-semibold" for="email">
-                        Email
-                    </label>
-                </div>
-                <div>
-                    <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="email" type="text"
-                        name="email" value="<?= $userkontak['email'] ?>">
-                </div>
-            </div>
-            <!-- EMAIL END -->
+                    <!-- EMAIL START -->
+                    <div class="">
+                        <div>
+                            <label class=" text-cardData font-semibold" for="email">
+                                Email
+                            </label>
+                        </div>
+                        <div>
+                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="email"
+                                type="text" name="email" value="<?= $userkontak['email'] ?>">
+                        </div>
+                    </div>
+                    <!-- EMAIL END -->
 
-            <!-- UPLOAD START -->
-            <div class="mb-8 gap-4 flex flex-col">
-                <label for="upload" class=" text-cardData font-semibold">Upload</label>
-                <div class="bg-cover bg-center rounded-full border-2 border-cardData/50 border-dashed"
-                    style="background-image: url('<?= $userkontak['foto_path'] ?>'); width: 100px; height: 100px;">
-                </div>
-                <div>
-                    <input type="file" class="w-full text-sm text-slate-500 
+                    <!-- UPLOAD START -->
+                    <div class="mb-8 gap-4 flex flex-col">
+                        <label for="upload" class=" text-cardData font-semibold">Upload</label>
+                        <div class="bg-cover bg-center rounded-full border-2 border-cardData/50 border-dashed"
+                            style="background-image: url('<?= $userkontak['foto_path'] ?>'); width: 100px; height: 100px;">
+                        </div>
+                        <div>
+                            <input type="file" class="w-full text-sm text-slate-500 
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-lg file:border-0
                     file:text-sm file:font-semibold
                     file:bg-textColor2 file:text-slate-900
                     hover:file:bg-textColor hover:file:text-cardData
                     " id="upload" name="upload" value="<?= $userkontak['foto_path'] ?>">
-                    <!-- </form> -->
-                </div>
+                            <!-- </form> -->
+                        </div>
+                    </div>
+                    <!-- UPLOAD END -->
+
+                    <!-- BUTTON START -->
+                    <div class="flex flex-row gap-10">
+
+                        <a href="index.php"
+                            class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
+                            <span class="text-cardData font-bold">Cancel</span>
+                        </a>
+                        <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
+                            <span class="text-textColor font-bold">Submit</span>
+                        </button>
+
+                    </div>
+
+                    <!-- BUTTON END -->
+                </form>
+
             </div>
-            <!-- UPLOAD END -->
-
-            <!-- BUTTON START -->
-            <div class="flex flex-row gap-2">
-
-                <a href="index.php"
-                    class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
-                    <span class="text-cardData font-bold">Cancel</span>
-                </a>
-                <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
-                    <span class="text-textColor font-bold">Submit</span>
-                </button>
-
-            </div>
-
-            <!-- BUTTON END -->
-        </form>
-
-    </div>
 </body>
 
 </html>

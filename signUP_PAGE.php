@@ -7,19 +7,25 @@ if (isset($_POST["signup"])) {
     $name = $_POST["name"];
     $passw1 = $_POST["passw1"];
     $passw2 = $_POST["passw2"];
+    $recaptcha_response = $_POST['g-recaptcha-response'];
 
     if ($passw1 === $passw2 && $name !== "" && $passw1 !== "" && $passw2 !== "") {
-        $cek = create_NEWUSER($name, $passw1);
-        if ($cek === "gagal") {
-            $error_message = "Failed to create user. Please try again.";
+        if (validate_recaptcha($recaptcha_response)) {
+            $cek = create_NEWUSER($name, $passw1);
+            if ($cek === "gagal") {
+                $error_message = "Failed to create user. Please try again.";
+            } else {
+                header("Location: login.php");
+                exit;
+            }
         } else {
-            header("Location: login.php");
-            exit;
+            $error_message = "reCAPTCHA verification failed. Please try again.";
         }
     } else {
-        $error_message = "All fields must be completed";
+        $error_message = "All fields must be completed and passwords must match";
     }
 }
+
 ?>
 
 
@@ -30,6 +36,7 @@ if (isset($_POST["signup"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Sign Up | LaborLink</title>
     <script>
@@ -178,6 +185,12 @@ if (isset($_POST["signup"])) {
                 <br /> -->
                     </div>
                     <!-- PASSWORD CONFIRM END -->
+
+                    <!-- CAPTCHA START -->
+                    <div class="g-recaptcha flex justify-center items-center"
+                        data-sitekey="6LeQr6IpAAAAAFwL29Ssdz2thuqBv4-r8EWIEi11">
+                    </div>
+                    <!-- CAPTCHA END -->
 
                     <div class="mt-6">
                         <button type="submit" name="signup" class="bg-textColor2 w-full py-2 rounded-full"><span

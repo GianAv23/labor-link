@@ -143,3 +143,27 @@ function list_RECENTLY($id){
     }
     return $allOfList;
 }
+
+function validate_recaptcha($recaptcha_response)
+{
+    if (!isset($recaptcha_response) || empty($recaptcha_response)) {
+        return false;
+    }
+
+    $secret = '6LeQr6IpAAAAAEJGJpFl4OExwg4ObIN_4H7vakdO';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'secret' => $secret,
+        'response' => $recaptcha_response
+    ]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $response = json_decode($response);
+
+    return $response->success;
+}

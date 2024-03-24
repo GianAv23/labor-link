@@ -6,9 +6,12 @@ $error_message = '';
 if (isset($_POST["submit"])) {
     $name = $_POST["name"];
     $passw = $_POST["passw"];
+    $recaptcha_response = $_POST['g-recaptcha-response'];
 
     if (empty($name) || empty($passw)) {
         $error_message = "Username and password are required";
+    } elseif (!validate_recaptcha($recaptcha_response)) {
+        $error_message = "reCAPTHCA verification failed, please try again.";
     } else {
         if (cek_USER_and_PASS($name, $passw)) {
             header("Location: index.php");
@@ -18,6 +21,7 @@ if (isset($_POST["submit"])) {
         }
     }
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -59,7 +63,7 @@ if (isset($_POST["submit"])) {
             <img class="absolute z-0 top-0 left-0 w-screen h-screen" src="assets/blurellipse.svg" alt="">
             <!-- ELLIIPSE END -->
 
-            <div class="w-screen min-h-screen flex flex-col justify-center px-10 md:px-32 lg:px-60 xl:px-96">
+            <div class="w-screen min-h-screen flex flex-col justify-center py-2 px-10 md:px-32 lg:px-60 xl:px-96">
 
                 <!-- HEADER START -->
                 <div class="z-10 flex flex-col gap-2 mb-8 items-center">
@@ -124,12 +128,9 @@ if (isset($_POST["submit"])) {
                             <input type="checkbox" id="showPassword"
                                 class="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer">
                             <label for="showPassword"
-                                class="absolute top-1/2 right-10 transform -translate-y-1/2 text-sm text-textColor2 cursor-pointer">Show
+                                class="absolute top-1/2 right-10 transform -translate-y-1/2 text-sm text-textColor2 cursor-pointer xs:">Show
                                 password</label>
                         </div>
-
-
-
 
 
                         <a href="change_PASS.php" class="flex justify-end"><span
@@ -144,14 +145,13 @@ if (isset($_POST["submit"])) {
 
 
                     <!-- CAPTCHA START -->
-                    <div class="flex flex-col">
-                        <div class="g-recaptcha flex justify-center items-center"
-                            data-sitekey="6LeQr6IpAAAAAFwL29Ssdz2thuqBv4-r8EWIEi11"></div>
+                    <div class="g-recaptcha flex justify-center items-center"
+                        data-sitekey="6LeQr6IpAAAAAFwL29Ssdz2thuqBv4-r8EWIEi11">
                     </div>
                     <!-- CAPTCHA END -->
 
                     <!-- BUTTON START -->
-                    <div class="mt-6">
+                    <div class="mt-2">
                         <button type="submit" name="submit"
                             class="bg-textColor2 w-full py-2 rounded-full font-bold hover:bg-textColor2/40 hover:text-textColor2"><span>Log
                                 In</span>

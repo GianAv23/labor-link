@@ -204,7 +204,7 @@ if(!isset($_SESSION['id'])){
                     <!-- UPLOAD END -->
 
                     <!-- BUTTON START -->
-                    <div class="flex flex-row gap-10">
+                    <div class="flex flex-row gap-6">
 
                         <a href="index.php"
                             class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center blockqq hover:bg-textColor/80">

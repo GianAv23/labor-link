@@ -52,7 +52,7 @@ if(!isset($_SESSION['id'])){
     }
     </script>
 
-    <title>Labor Link🚀</title>
+    <title>LaborLink</title>
 </head>
 
 <body>
@@ -61,10 +61,6 @@ if(!isset($_SESSION['id'])){
 
         <!-- ELLIIPSE START -->
         <img class="absolute z-0 top-0 left-0 w-screen" src="assets/blurellipse.svg" alt="">
-        <!-- ELLIIPSE END -->
-
-        <!-- ELLIIPSE START -->
-        <!-- <img class="absolute z-0 bottom-0 right-0 w-screen h-full" src="assets/blurellipse.svg" alt=""> -->
         <!-- ELLIIPSE END -->
 
         <div class="container-fluid flex flex-col z-10">
@@ -79,7 +75,7 @@ if(!isset($_SESSION['id'])){
                     <div class="modalProfile bg-cardData/80 backdrop-blur-sm rounded-xl p-3 items-center">
                         <form class="flex flex-col gap-2" method="post">
                             <div>
-                                <span class="font-semibold text-textColor text-lg"><?= $name ?></span>
+                                <span class="font-bold text-textColor text-lg"><?= $name ?></span>
                             </div>
                             <button class="bg-bgColor/80 rounded-full border-2 border-cardData/50 px-3 py-2"
                                 type="submit" name="logout"><span class="text-cardData font-semibold text-sm">Log
@@ -116,15 +112,7 @@ if(!isset($_SESSION['id'])){
 
                 <div class="flex flex-row">
 
-                    <!-- <form action="insert_form.php" method="">
-                        <button
-                            class="bg-cardData/15 rounded-full px-6 text-white font-bold text-3xl items-center border-dashed border-2 mr-2"
-                            type="submit" name="inigua">
-                            <img class="h-6 w-6" src="assets/add_contact.svg" alt=""></button>
-
-                    </form> -->
-
-                    <a class="bg-cardData/15 rounded-full px-6 py-3 text-white font-bold text-3xl items-center border-dashed border-2 mr-2 flex"
+                    <a class="bg-cardData/15 rounded-full px-6 py-3 text-white font-bold text-3xl items-center border-dashed border-2 mr-2 flex hover:bg-textColor"
                         href="insert_form.php">
                         <img class="h-6 w-6" src="assets/add_contact.svg" alt=""></a>
 
@@ -132,7 +120,6 @@ if(!isset($_SESSION['id'])){
 
                     <div class="flex flex-row gap-2 overflow-x-scroll w-[210px] rounded-full md:w-[500px]">
                         <?php
-                        // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
                         foreach ($kontak_terbaru as $data) : ?>
                         <div
                             class="bg-cardData w-48 h-14 items-center px-2 rounded-full shadow-sm flex flex-row shrink-0">
@@ -170,13 +157,9 @@ if(!isset($_SESSION['id'])){
             <div id="result_not_found" style="display: none;"><span class="text-cardData font-semibold">Result not
                     found</span></div>
 
-
-
             <div
                 class="flex flex-col flex-grow gap-4 overflow-y-scroll h-96 w-80 rounded-3xl mb-4 md:w-96 lg:h-96 lg:gap-6 lg:flex-grow md:flex-grow">
                 <?php
-                //$stmt->execute();
-                // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
                 foreach ($data_kontak as $data) : ?>
 
                 <div class=" bg-slate-50 h-48 w-full p-3 rounded-3xl flex flex-col shrink-0">
@@ -227,7 +210,7 @@ if(!isset($_SESSION['id'])){
                             <form method="post" action="delete_proses.php">
                                 <input type="hidden" name="id" value="<?= $data['idKontak'] ?>">
                                 <button
-                                    class="w-36 h-8 bg-cardData rounded-full px-3 border-2 border-dashed border-textColor/50 flex flex-row items-center justify-center gap-2 md:w-44"
+                                    class="w-36 h-8 bg-cardData rounded-full px-3 border-2 border-dashed border-textColor/50 flex flex-row items-center justify-center gap-2 hover:bg-cardData/5 md:w-44"
                                     type="submit">
 
                                     <img class="w-4 h-4" src="assets/deleteBtn.svg" alt="">
@@ -239,7 +222,7 @@ if(!isset($_SESSION['id'])){
                             <form method="post" action="edit_proses.php">
                                 <!-- <input type="hidden" name="id" value="<?= $row['id'] ?>"> -->
                                 <button
-                                    class="w-36 h-8 bg-editBtn rounded-full px-3 text-white font-semibold flex flex-row items-center justify-center gap-2 md:w-44"
+                                    class="w-36 h-8 bg-editBtn rounded-full px-3 text-white font-semibold flex flex-row items-center justify-center gap-2 hover:bg-editBtn/90 md:w-44"
                                     type="submit" name="iniupdate" value="<?= $data['idKontak'] ?>">
 
                                     <img class="w-4 h-4" src="assets/editBtn.svg" alt="">
@@ -275,41 +258,6 @@ if(!isset($_SESSION['id'])){
     }
     </script>
 
-
-
-    <!-- <script>
-    const bookmarkBtn = document.querySelector(".bookmark-btn");
-
-    bookmarkBtn.addEventListener("click", function() {
-        bookmarkBtn.classList.toggle("bookmarked");
-    });
-    </script> -->
-
-
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("#live_search").keyup(function() {
-            var input = $(this).val();
-            // console.log(input);
-            // alert(input);
-
-            if(input != ""){
-                $.ajax({
-
-                    url:"",
-                    method: "POST",
-                    data={input:input}
-
-                    success:function
-
-                })
-
-            }
-        });
-    });
-    </script> -->
 </body>
 
 </html>

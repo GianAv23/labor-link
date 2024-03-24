@@ -116,7 +116,6 @@ if (!isset($_SESSION['id'])) {
 <body>
     <div class="w-screen min-h-screen">
 
-        <!-- <img class="absolute w-screen h-full object-cover" src="assets/bgForm.png" alt=""> -->
 
         <div class="absolute bg-bgColor/95">
 
@@ -163,8 +162,10 @@ if (!isset($_SESSION['id'])) {
                         </div>
 
                         <div>
-                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="nama_kontak"
-                                type="text" name="nama_kontak" value="<?= $userkontak['nama_kontak'] ?>">
+                            <input
+                                class="rounded-xl w-full bg-textColor/80 py-3 px-4 text-cardData border border-textColor2/60"
+                                id="nama_kontak" type="text" name="nama_kontak"
+                                value="<?= $userkontak['nama_kontak'] ?>">
                         </div>
                     </div>
                     <!-- NAMA KONTAK END -->
@@ -178,7 +179,8 @@ if (!isset($_SESSION['id'])) {
                             </label>
                         </div>
                         <div>
-                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData"
+                            <input
+                                class="rounded-xl w-full bg-textColor/80 py-3 px-4 text-cardData border border-textColor2/60"
                                 id="nama_perusahaan" type="text" name="nama_perusahaan"
                                 value="<?= $userkontak['nama_perusahaan'] ?>">
                         </div>
@@ -193,8 +195,9 @@ if (!isset($_SESSION['id'])) {
                             </label>
                         </div>
                         <div>
-                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="no_telp"
-                                type="text" name="no_telp" value="<?= $userkontak['no_telp'] ?>">
+                            <input
+                                class="rounded-xl w-full bg-textColor/80 py-3 px-4 text-cardData border border-textColor2/60"
+                                id="no_telp" type="text" name="no_telp" value="<?= $userkontak['no_telp'] ?>">
                         </div>
                     </div>
                     <!-- NO TELP END -->
@@ -207,8 +210,9 @@ if (!isset($_SESSION['id'])) {
                             </label>
                         </div>
                         <div>
-                            <input class="rounded-lg w-full bg-textColor/50 py-3 px-4 text-cardData" id="email"
-                                type="text" name="email" value="<?= $userkontak['email'] ?>">
+                            <input
+                                class="rounded-xl w-full bg-textColor/80 py-3 px-4 text-cardData border border-textColor2/60"
+                                id="email" type="text" name="email" value="<?= $userkontak['email'] ?>">
                         </div>
                     </div>
                     <!-- EMAIL END -->
@@ -236,11 +240,14 @@ if (!isset($_SESSION['id'])) {
                     <div class="flex flex-row gap-10">
 
                         <a href="index.php"
-                            class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block">
+                            class="w-full shadow bg-textColor2/20 border-dashed border-2 border-cardData py-2 px-4 rounded-full text-center block hover:bg-textColor/80">
                             <span class="text-cardData font-bold">Cancel</span>
                         </a>
-                        <button class="w-full shadow bg-textColor2 py-2 px-4 rounded-full" type="submit" name="submit">
-                            <span class="text-textColor font-bold">Submit</span>
+                        <button
+                            class="w-full shadow bg-textColor2 py-2 px-4 rounded-full font-bold hover:bg-textColor2/40 hover:text-textColor2"
+                            type="
+                            submit" name="submit">
+                            <span>Submit</span>
                         </button>
 
                     </div>

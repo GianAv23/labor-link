@@ -95,8 +95,6 @@ if(!isset($_SESSION['id'])){
 <body>
     <div class="w-screen min-h-screen">
 
-        <!-- <img class="absolute min-h-screen object-cover" src="assets/bgForm.png" alt=""> -->
-
         <div class="absolute bg-bgColor/95">
 
             <!-- ELLIIPSE START -->
@@ -105,7 +103,7 @@ if(!isset($_SESSION['id'])){
 
             <div class="w-screen min-h-screen flex flex-col justify-center py-10 px-8">
                 <!-- HEADER START -->
-                <div class="flex flex-col gap-2 justify-center items-center mb-8">
+                <div class="z-10 flex flex-col gap-2 justify-center items-center mb-8">
                     <!-- LOGO START -->
                     <div class="bg-textColor/30 rounded-lg w-28 h-8 flex items-center justify-center">
                         <span class="text-white font-bold">
@@ -116,10 +114,6 @@ if(!isset($_SESSION['id'])){
                     <span class="text-cardData font-bold text-3xl">Add Contact</span>
                 </div>
                 <!-- HEADER END -->
-
-
-
-                <!-- <div class="container-lg flex flex-col z-10"> -->
 
                 <form class="z-10 flex flex-col gap-6 mt-8 md:px-44 lg:px-64 xl:px-80" method="post"
                     enctype="multipart/form-data">
@@ -226,7 +220,6 @@ if(!isset($_SESSION['id'])){
                     </div>
 
                     <!-- BUTTON END -->
-                    <!-- </div> -->
             </div>
 
             </form>

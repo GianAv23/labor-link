@@ -102,10 +102,6 @@ if (isset($_POST["submit"])) {
                             <input type="text" name="name" id="a" placeholder="Enter your username"
                                 class="rounded-xl w-full bg-textColor/80 py-3 px-4 text-cardData border border-textColor2/60">
                         </div>
-
-
-                        <!-- <label for="a">Masukkan Username :</label>
-                <input type="text" name="name" id="a" /> -->
                     </div>
                     <!-- USERNAME END -->
 
@@ -116,11 +112,6 @@ if (isset($_POST["submit"])) {
                                 Password
                             </label>
                         </div>
-
-                        <!-- <div>
-                            <input type="password" name="passw" id="p" placeholder="Enter your password"
-                                class="rounded-xl w-full bg-textColor/80 py-3 px-4 text-cardData border border-textColor2/60">
-                        </div> -->
 
                         <div class="relative">
                             <input type="password" name="passw" id="p" placeholder="Enter your password"
@@ -137,9 +128,6 @@ if (isset($_POST["submit"])) {
                                 class="text-textColor2 font-medium text-sm mt-1">Lupa
                                 Password</span></a>
 
-
-                        <!-- <label for="a">Masukkan Username :</label>
-                <input type="text" name="name" id="a" /> -->
                     </div>
                     <!-- PASSWORD END -->
 
@@ -165,15 +153,6 @@ if (isset($_POST["submit"])) {
                     </div>
 
                     <!-- BUTTON END -->
-
-                    <!-- <br />
-            <label for="p">Password :</label>
-            <input type="password" name="passw" id="p">
-            <br />
-
-
-            <button type="submit" name="submit">Login</button>
-            <br /> -->
                 </form>
                 <!-- FORM END -->
 
